@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github</title>
+    
+    <link rel="stylesheet" type="text/css" href="./static/style.css">
+</head>
+<body style="background-image:url(https://gitprotect.io/blog/wp-content/uploads/2022/03/GitHub-secure.png);">
+    <div>
+        <form action="#">
+      
+            <label id="test"><b>Enter github profile to get user info:</b></label>
+            <input type="text" id="prof">
+            <button id="submit" onclick='git_prof()'>Commit</button>
+            
+          <hr>
+          
+          
+          
+          
+        </form>
+    </div>
+
+
+    <div class="tables_container">
+      <table id="userTable"></table>
+      
+      <table id="repoTable"></table>
+    </div>
+
+    <!-- <button id = "user_button" type="button" class="collapsible"></button> -->
+
+    <script>
+
+function handleResponse(response) {
+  var repo_resp = response['repo_data'];
+  var user_resp = response['user_data'];
+
+  // Clear tables
+  var repo_table = document.getElementById("repoTable");
+  repo_table.innerHTML = "";
+  var repo_caption = document.createElement("caption");
+  var link = document.createElement("a");
+  // var repo_link = link.cloneNode();
+  repo_caption.textContent = "REPOSITORY INFORMATION";
+  // repo_link.href = user_resp['html_url']+'?tab=repositories';
+  // repo_caption.appendChild(repo_link);
+  repo_table.appendChild(repo_caption);
+
+  // repo_caption.addEventListener("click", function() {
+  // repo_table.classList.toggle("hidden");
+  // });
+
+  var user_table = document.getElementById("userTable");
+  user_table.innerHTML = "";
+  var user_caption = document.createElement("caption");
+  var user_link = link.cloneNode();
+  user_link.textContent = "USER INFORMATION";
+  user_link.href = user_resp['html_url'];
+  user_caption.appendChild(user_link);
+  user_table.appendChild(user_caption);
+
+
+  
+
+  // Create repo table
+  var requiredFields = ["name", "description", "created_at", "updated_at", "language", "size"];
+  for (let i = 0; i < repo_resp.length; i++) {
+    var repo_numCell = repo_table.insertRow();
+    // var repo_keyCell = repo_numCell.insertCell();
+    // repo_keyCell.innerHTML = "Repository number";
+    // var repo_valueCell = repo_numCell.insertCell();
+    // repo_valueCell.innerHTML = i+1;
+    var repoLink = link.cloneNode(); // Create hyperlink element
+    repoLink.href = repo_resp[i]["html_url"]; // Set hyperlink URL
+    repoLink.text = 'REPOSITORY NUMBER : '+(i+1); // Set hyperlink text
+    repo_numCell.append(repoLink);
+
+    // var row = repo_table.insertRow();
+    for (let j = 0; j < requiredFields.length; j++) {
+      if (repo_resp[i].hasOwnProperty(requiredFields[j])) {
+        var row = repo_table.insertRow();
+        var keyCell = row.insertCell();
+        keyCell.innerHTML = requiredFields[j];
+        var valueCell = row.insertCell();
+        valueCell.innerHTML = repo_resp[i][requiredFields[j]];
+      }
+    }
+  }
+
+  // Get the table row using nth-child selector
+
+
+ 
+  // Create user table
+  for (var key in user_resp) {
+    if (user_resp[key] != null && user_resp[key] != '' && key.endsWith('url') === false) {
+      var row = user_table.insertRow();
+      var keyCell = row.insertCell();
+      keyCell.innerHTML = key;
+      var valueCell = row.insertCell();
+      valueCell.innerHTML = user_resp[key];
+    }
+  }
+}
+
+
+
+
+
+
+function git_prof(){
+  var x = document.getElementById("prof").value;
+  // let repo_url = "http://127.0.0.1:5000/user_repo"
+  // let user_url = "http://127.0.0.1:5000/gt_user"
+  
+  // const responseDiv = document.createElement();
+  fetch("http://127.0.0.1:5000/git_data",
+  {
+    method:'POST',
+    headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ prof: x })
+})
+  .then(response => response.json())
+  .then(data => handleResponse(data));
+  //   handleResponse(userData, "userTable");
+  
+  }
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,70 @@
+.tables-container {
+    display: flex;
+    /* justify-content: space-between; */
+    /* background: rgba(255, 255, 255, 0.8); */
+    /* filter:blur(10px); */
+  }
+  
+#userTable {
+    /* display: none; */
+    width: 45%;
+    display: block;
+    border-color: rgb(252, 253, 248);
+    float:left;
+    margin-left: 10%;
+    color: yellowgreen;
+    
+  }
+  th , td {
+    border: 1px solid black;
+  }
+  
+#repoTable {
+    width: 45%;
+    float: right;
+    color: yellowgreen;
+    
+    
+  }
+#repoTable tr:nth-child(7n+1){
+    background-color: black;
+
+  }
+
+a{
+  /* width: 100%; */
+  /* float: right; */
+  
+  color: rgb(239, 58, 8);
+  /* margin-right: 20%; */
+  text-decoration: none;
+}
+
+  /* #userTable tr {
+    border: 2px solid green;
+  } */
+
+
+/* #repoTable tr:nth-child(8n+1):after {
+  content: "\25BC";
+  display: inline-block;
+  transform: rotate(90deg);
+  cursor: pointer;
+  margin-left: 5px;
+  } */
+/* #repoTable tr:nth-child(7n+2):nth-child(7n+7) {
+    display: none;
+  } */
+
+
+/* caption{
+  cursor: pointer;
+} */
+
+  /* #repoTable tr:nth-child(7n +1):hover + tr :  */
+  
+  
+  /* #repoTable tr:nth-child(7n +1):hover ~ tr:nth-child(7n+2):nth-child(7n+7) {
+    display: block;
+  } */
+  
